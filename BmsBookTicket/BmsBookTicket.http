@@ -1,0 +1,6 @@
+@BmsBookTicket_HostAddress = http://localhost:0
+
+GET {{BmsBookTicket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
