@@ -62,6 +62,15 @@ Seed logic lives in:
 4. Mark seats as BLOCKED.
 5. Create a ticket.
 
+## Transactions and locking
+The booking flow runs inside a transaction when using a relational provider. The transaction is started in `BmsBookTicket/Services/TicketService.cs` with `IsolationLevel.Serializable` to keep the read-validate-update sequence atomic.
+
+Row-level locking is handled in `BmsBookTicket/Repositories/ShowSeatRepository.cs`. When the provider is Postgres (Npgsql), `GetByIdsForUpdateAsync` executes a `SELECT ... FOR UPDATE` query against `show_seats` so concurrent transactions cannot lock the same rows.
+
+Together, this ensures:
+- the seat availability check is consistent,
+- and two users cannot book the same seat at the same time.
+
 ## Implementation details
 - Data model mirrors the Java entities in `BmsBookTicket/Models/` (User, Show, Seat, ShowSeat, Ticket, etc.).
 - `TicketController` exposes the booking endpoint and returns a `BookTicketResponseDto` in `BmsBookTicket/Controllers/TicketController.cs`.
