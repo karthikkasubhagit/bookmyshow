@@ -1,6 +1,6 @@
 # BookMyShow - .NET
 
-This is a .NET 10 Web API port of the Java BookMyShow ticket-booking sample. It mirrors the same models, booking flow, and controller logic, and includes unit tests similar to the Java tests.
+This is a .NET 10 Web API port of the BookMyShow ticket-booking sample.
 
 ## Tech stack
 - .NET 10 (ASP.NET Core Web API)
@@ -18,7 +18,7 @@ This is a .NET 10 Web API port of the Java BookMyShow ticket-booking sample. It 
 - Database configuration (EF Core)
 - Controller endpoints
 
-You generally run these commands:
+Commands:
 - Restore packages: `dotnet restore`
 - Build: `dotnet build`
 - Run: `dotnet run`
@@ -55,7 +55,7 @@ On startup, the app seeds a test user, a show, four seats, and four show seats i
 Seed logic lives in:
 - `BmsBookTicket/Data/SeedData.cs`
 
-## Booking flow (same as Java)
+## Booking flow 
 1. Validate user.
 2. Fetch show seats (with a row-level lock in Postgres).
 3. Validate seat availability.
@@ -72,7 +72,7 @@ Together, this ensures:
 - and two users cannot book the same seat at the same time.
 
 ## Implementation details
-- Data model mirrors the Java entities in `BmsBookTicket/Models/` (User, Show, Seat, ShowSeat, Ticket, etc.).
+
 - `TicketController` exposes the booking endpoint and returns a `BookTicketResponseDto` in `BmsBookTicket/Controllers/TicketController.cs`.
 - `TicketService` contains the core booking logic and uses a transaction when running against a relational provider in `BmsBookTicket/Services/TicketService.cs`.
 - `ShowSeatRepository` applies a Postgres `FOR UPDATE` lock for seat rows when the provider is Npgsql; it falls back to a regular query for in-memory tests in `BmsBookTicket/Repositories/ShowSeatRepository.cs`.
@@ -83,7 +83,6 @@ Together, this ensures:
 - Seed data is added on startup in `BmsBookTicket/Data/SeedData.cs` and wired in `BmsBookTicket/Program.cs`.
 
 ## Tests
-The tests use EF Core InMemory to match the Java H2-style behavior (no Docker or Postgres required).
 
 Run tests from `DNProjects/BmsBookTicket.Tests`:
 ```
