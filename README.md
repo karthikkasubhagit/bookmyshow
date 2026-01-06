@@ -12,7 +12,7 @@ This is a .NET 10 Web API port of the Java BookMyShow ticket-booking sample. It 
 - `BmsBookTicket/` - API project
 - `BmsBookTicket.Tests/` - unit tests
 
-## Quick start (new to .NET 10)
+## Quick start
 .NET 10 uses a single `Program.cs` with top-level statements. This file sets up:
 - Dependency injection (services added to the container)
 - Database configuration (EF Core)
